@@ -15,6 +15,7 @@ import net.runelite.osrsbb.internal.ScriptHandler;
 import net.runelite.osrsbb.internal.input.Canvas;
 import net.runelite.osrsbb.methods.MethodContext;
 import net.runelite.client.modified.RuneLite;
+import net.runelite.osrsbb.plugin.AccountManager;
 
 import java.applet.Applet;
 import java.awt.*;
@@ -110,6 +111,24 @@ public class BadLite extends RuneLite implements BadLiteInterface {
             return canvas;
         }
         return canvas;
+    }
+
+    /**
+     * Sets an account for the RuneLite (Bot) instance
+     * @param name  The name of the account
+     * @return  If the account existed already
+     */
+    public boolean setAccount(final String name) {
+        if (name != null) {
+            for (String s : AccountManager.getAccountNames()) {
+                if (s.toLowerCase().equals(name.toLowerCase())) {
+                    account = name;
+                    return true;
+                }
+            }
+        }
+        account = null;
+        return false;
     }
 
     /**
