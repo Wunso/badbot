@@ -1,2 +1,5 @@
 rootProject.name = 'badbot'
 
+include ':badbotplugin'
+project(':badbotplugin').projectDir = file('../badbotplugin/badbotplugin')
+
