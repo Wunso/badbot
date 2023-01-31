@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'com.github.Wunso'
-version = '0.0.2'
+version = '0.0.1'
 
 repositories {
     mavenLocal()
@@ -15,6 +15,18 @@ repositories {
         content {
             // only download packages for group net.runelite*
             includeGroupByRegex "net\\.runelite.*"
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'com.github.Wunso'
+            artifactId = 'badbot'
+            version = '0.0.1'
+
+            from components.java
         }
     }
 }
