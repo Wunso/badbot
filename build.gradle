@@ -60,8 +60,7 @@ dependencies {
         exclude group: 'ch.qos.logback', module: 'logback-classic'
     }
 
-    //implementation group: 'com.github.Wunso', name: 'badbotplugin', version:'e8c5417cb1'
-    //implementation project(':badbotplugin')
+    //implementation group: 'com.github.Wunso', name: 'badbotplugin', version:'78a9b50aef'
     implementation group: 'com.github.joonasvali.naturalmouse', name: 'naturalmouse', version: '2.0.3'
     implementation group: 'javassist', name: 'javassist', version: '3.12.1.GA'
     implementation group: 'net.sf.jopt-simple', name:'jopt-simple', version: '5.0.4'
