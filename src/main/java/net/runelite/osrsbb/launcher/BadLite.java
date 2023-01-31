@@ -13,13 +13,17 @@ import net.runelite.osrsbb.internal.InputManager;
 import net.runelite.osrsbb.internal.PassiveScriptHandler;
 import net.runelite.osrsbb.internal.ScriptHandler;
 import net.runelite.osrsbb.internal.input.Canvas;
+import net.runelite.osrsbb.methods.Environment;
 import net.runelite.osrsbb.methods.MethodContext;
 import net.runelite.client.modified.RuneLite;
 import net.runelite.osrsbb.plugin.AccountManager;
+import net.runelite.osrsbb.plugin.ScriptSelector;
+import net.runelite.osrsbb.service.ScriptDefinition;
 
 import java.applet.Applet;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Constructor;
 import java.util.EventListener;
 import java.util.Map;
 import java.util.TreeMap;
@@ -30,50 +34,31 @@ import java.util.concurrent.Executors;
 @SuppressWarnings("removal")
 public class BadLite extends RuneLite implements BadLiteInterface {
     private String account;
-    private InputManager im;
-    private ScriptHandler sh;
-    private PassiveScriptHandler psh;
-    private BreakHandler bh;
     private MethodContext methods;
-    private Canvas canvas;
     private Component panel;
-    private Image image;
     private PaintEvent paintEvent;
     private TextPaintEvent textPaintEvent;
     private EventManager eventManager;
     private BufferedImage backBuffer;
+    private Image image;
+    private InputManager im;
+    private ScriptHandler sh;
+    private PassiveScriptHandler psh;
+    private BreakHandler bh;
     private Map<String, EventListener> listeners;
+    private boolean kill_passive = false;
+    private Canvas canvas;
 
-    public String getAccountName() {
-        return account;
-    }
+    /**
+     * Defines what types of input are enabled when overrideInput is false.
+     * Defaults to 'keyboard only' whenever a script is started.
+     */
+    public volatile int inputFlags = Environment.INPUT_KEYBOARD | Environment.INPUT_MOUSE;
 
-    public InputManager getInputManager() {
-        return im;
-    }
-    public MethodContext getMethodContext() {
-        return methods;
-    }
-    public Client getClient() {
-        return client = injector.getInstance(Client.class);
-    }
-    public Applet getLoader() {
-        return (Applet) this.getClient();
-    }
-    public ItemManager getItemManager() { return injector.getInstance(ItemManager.class);}
-    public EventManager getEventManager() {
-        return eventManager;
-    }
-    public ScriptHandler getScriptHandler() {
-        return sh;
-    }
-    public BreakHandler getBreakHandler() {
-        return bh;
-    }
-
-    public BufferedImage getBackBuffer() {
-        return backBuffer;
-    }
+    /**
+     * Whether or not user input is allowed despite a script's preference.
+     */
+    public volatile boolean overrideInput = false;
 
     /**
      * Whether or not all anti-randoms are enabled.
@@ -86,49 +71,100 @@ public class BadLite extends RuneLite implements BadLiteInterface {
     public volatile boolean disableAutoLogin = false;
 
     /**
-     * Assigns this instance of the RuneLite (Bot) a method context for calling bot api methods
-     * as well as assigns bank constants here.
+     * Whether or not rendering is enabled.
      */
-    public void setMethodContext() {
-        methods = new MethodContext(this);
-        methods.bank.assignConstants();
-    }
+    public volatile boolean disableRendering = false;
 
     /**
-     * Gets the canvas object while checking to make sure we don't do this before it has actually
-     * loaded
-     * @return  The Canvas if the client is loaded otherwise null
+     * Whether or not the canvas is enabled.
      */
-    public Canvas getCanvas() {
-        if (client == null) {
-            return null;
-        }
-        if (client.getCanvas() == null) {
-            return null;
-        }
-        if (canvas == null) {
-            canvas = new Canvas(client.getCanvas());
-            return canvas;
-        }
-        return canvas;
-    }
+    public volatile boolean disableCanvas = false;
 
     /**
-     * Sets an account for the RuneLite (Bot) instance
-     * @param name  The name of the account
-     * @return  If the account existed already
+     * Set the canvas to the opposite state
      */
-    public boolean setAccount(final String name) {
-        if (name != null) {
-            for (String s : AccountManager.getAccountNames()) {
-                if (s.toLowerCase().equals(name.toLowerCase())) {
-                    account = name;
-                    return true;
-                }
+    public void changeCanvasState() {
+        if (disableCanvas) {
+            getLoader().setVisible(false);
+            return;
+        }
+        getLoader().setVisible(true);
+    }
+
+    public String getAccountName() {
+        return account;
+    }
+
+    public Client getClient() {
+        return client = injector.getInstance(Client.class);
+    }
+
+    public Applet getApplet() {return applet = injector.getInstance(Applet.class);}
+
+    public ItemManager getItemManager() { return injector.getInstance(ItemManager.class);}
+
+    public MethodContext getMethodContext() {
+        return methods;
+    }
+
+    public EventManager getEventManager() {
+        return eventManager;
+    }
+
+    public InputManager getInputManager() {
+        return im;
+    }
+
+    public BreakHandler getBreakHandler() {
+        return bh;
+    }
+
+    public ScriptHandler getScriptHandler() {
+        return sh;
+    }
+
+    public PassiveScriptHandler getPassiveScriptHandler() {
+        return psh;
+    }
+
+    public void addListener(Class<?> clazz) {
+        EventListener el = instantiateListener(clazz);
+        listeners.put(clazz.getName(), el);
+        eventManager.addListener(el);
+    }
+
+    public void removeListener(Class<?> clazz) {
+        EventListener el = listeners.get(clazz.getName());
+        listeners.remove(clazz.getName());
+        eventManager.removeListener(el);
+    }
+
+    private EventListener instantiateListener(Class<?> clazz) {
+        try {
+            EventListener listener;
+            try {
+                Constructor<?> constructor = clazz.getConstructor(RuneLite.class);
+                listener = (EventListener) constructor.newInstance(this);
+            } catch (Exception e) {
+                listener = clazz.asSubclass(EventListener.class).newInstance();
             }
+            return listener;
+        } catch (Exception ignored) {
+            log.debug("Failed to instantiate listener", ignored);
         }
-        account = null;
-        return false;
+        return null;
+    }
+
+    public boolean hasListener(Class<?> clazz) {
+        return clazz != null && listeners.get(clazz.getName()) != null;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public BufferedImage getBackBuffer() {
+        return backBuffer;
     }
 
     /**
@@ -152,6 +188,7 @@ public class BadLite extends RuneLite implements BadLiteInterface {
     public Component getPanel() {
         return this.panel;
     }
+
     public void setPanel(Component c) {
         this.panel = c;
     }
@@ -171,6 +208,94 @@ public class BadLite extends RuneLite implements BadLiteInterface {
             }
         }
         return null;
+    }
+
+    /**
+     * Sets an account for the RuneLite (Bot) instance
+     * @param name  The name of the account
+     * @return  If the account existed already
+     */
+    public boolean setAccount(final String name) {
+        if (name != null) {
+            for (String s : AccountManager.getAccountNames()) {
+                if (s.toLowerCase().equals(name.toLowerCase())) {
+                    account = name;
+                    return true;
+                }
+            }
+        }
+        account = null;
+        return false;
+    }
+
+    /**
+     * Gets the canvas object while checking to make sure we don't do this before it has actually
+     * loaded
+     * @return  The Canvas if the client is loaded otherwise null
+     */
+    public Canvas getCanvas() {
+        if (client == null) {
+            return null;
+        }
+        if (client.getCanvas() == null) {
+            return null;
+        }
+        if (canvas == null) {
+            canvas = new Canvas(client.getCanvas());
+            return canvas;
+        }
+        return canvas;
+    }
+
+    public Applet getLoader() {
+        return (Applet) this.getClient();
+    }
+
+    /**
+     * Assigns this instance of the RuneLite (Bot) a method context for calling bot api methods
+     * as well as assigns bank constants here.
+     */
+    public void setMethodContext() {
+        methods = new MethodContext(this);
+        methods.bank.assignConstants();
+    }
+
+    /**
+     * Stops and shuts down the current bot instance
+     */
+    public void shutdown() {
+        getLoader().stop();
+        getLoader().setVisible(false);
+        eventManager.killThread(false);
+        sh.stopScript();
+        psh.stopScript();
+        kill_passive = true;
+    }
+
+    public BadLite getInstance() {
+        return this;
+    }
+
+    public BadLite getInjectorInstance() {
+        return injector.getInstance(BadLite.class);
+    }
+
+
+    /**
+     * The actual method associated with initializing the client-related data. Such as creating the client sizing and
+     * binding the plethora of handlers, listeners, and managers to this particular RuneLite instance
+     * (outside the injector binding)
+     *
+     * @param  startClientBare  Whether to launch the client without any additional initialization settings or not
+     * @throws Exception        Any exception the client, bot, or RuneLite might throw.
+     */
+    public void init(boolean startClientBare) throws Exception {
+        if (startClientBare) {
+            this.bareStart();
+        }
+        else {
+            this.start();
+        }
     }
 
     public BadLite() throws Exception {
@@ -195,29 +320,19 @@ public class BadLite extends RuneLite implements BadLiteInterface {
         });
     }
 
-    @Override
     public void runScript(String account, String scriptName) {
-
+        getInjectorInstance().setAccount(account);
+        ScriptSelector ss = new ScriptSelector(getInjectorInstance());
+        ss.load();
+        ScriptDefinition def = ss.getScripts().stream().filter(x -> x.name.replace(" ", "").equals(scriptName)).findFirst().get();
+        try {
+            getInjectorInstance().getScriptHandler().runScript(def.source.load(def));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    @Override
-    public void stopScript() { sh.stopScript(); }
-
-    /**
-     * The actual method associated with initializing the client-related data. Such as creating the client sizing and
-     * binding the plethora of handlers, listeners, and managers to this particular RuneLite instance
-     * (outside the injector binding)
-     *
-     * @param  startClientBare  Whether to launch the client without any additional initialization settings or not
-     * @throws Exception        Any exception the client, bot, or RuneLite might throw.
-     */
-    @Override
-    public void init(boolean startClientBare) throws Exception {
-        if (startClientBare) {
-            this.bareStart();
-        }
-        else {
-            this.start();
-        }
+    public void stopScript() {
+        sh.stopScript();
     }
 }

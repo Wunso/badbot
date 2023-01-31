@@ -1,11 +1,15 @@
+/**
+ * Author:GigiaJ
+ *
+ * A modified RuneLite class that enables the utilization of the RSB API
+ *
+ */
 package net.runelite.client.modified;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
-import com.google.common.annotations.VisibleForTesting;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+
 import java.applet.Applet;
 import java.io.File;
 import java.io.IOException;
@@ -13,40 +17,30 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Stream;
 import javax.annotation.Nullable;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import javax.swing.SwingUtilities;
-import joptsimple.ArgumentAcceptingOptionSpec;
-import joptsimple.OptionParser;
-import joptsimple.OptionSet;
-import joptsimple.ValueConversionException;
-import joptsimple.ValueConverter;
+import javax.swing.*;
+
+import joptsimple.*;
 import joptsimple.util.EnumConverter;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.Client;
-import net.runelite.api.Constants;
+import net.runelite.api.*;
 import net.runelite.client.ClientSessionManager;
 import net.runelite.client.RuntimeConfig;
-import net.runelite.client.TelemetryClient;
 import net.runelite.client.account.SessionManager;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.discord.DiscordService;
@@ -55,24 +49,24 @@ import net.runelite.client.externalplugins.ExternalPluginManager;
 import net.runelite.client.plugins.PluginManager;
 import net.runelite.client.rs.ClientLoader;
 import net.runelite.client.rs.ClientUpdateCheckMode;
-import net.runelite.client.ui.ClientUI;
-import net.runelite.client.ui.FatalErrorDialog;
 import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.SplashScreen;
-import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.ui.overlay.WidgetOverlay;
+import net.runelite.osrsbb.launcher.BadLite;
+import okhttp3.Request;
+import okhttp3.Response;
+import net.runelite.client.ui.ClientUI;
+import net.runelite.client.ui.FatalErrorDialog;
+import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.ui.overlay.tooltip.TooltipOverlay;
 import net.runelite.client.ui.overlay.worldmap.WorldMapOverlay;
 import net.runelite.http.api.RuneLiteAPI;
-import net.runelite.osrsbb.launcher.BadLite;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import org.slf4j.LoggerFactory;
 
-@Singleton
+
 @Slf4j
+@Singleton
 @SuppressWarnings("removal")
 public class RuneLite extends net.runelite.client.RuneLite {
     public static final File RUNELITE_DIR = new File(System.getProperty("user.home"), ".runelite");
@@ -91,41 +85,38 @@ public class RuneLite extends net.runelite.client.RuneLite {
     public static Injector injector;
 
     @Inject
+    public ClientUI clientUI;
+
+    @Inject
     public PluginManager pluginManager;
 
     @Inject
     public ExternalPluginManager externalPluginManager;
 
     @Inject
-    private EventBus eventBus;
+    public EventBus eventBus;
 
     @Inject
-    private ConfigManager configManager;
+    public ConfigManager configManager;
 
     @Inject
-    private SessionManager sessionManager;
+    public SessionManager sessionManager;
 
     @Inject
-    private DiscordService discordService;
+    public DiscordService discordService;
 
     @Inject
-    private ClientSessionManager clientSessionManager;
+    public ClientSessionManager clientSessionManager;
 
     @Inject
-    public ClientUI clientUI;
+    public OverlayManager overlayManager;
 
     @Inject
-    private OverlayManager overlayManager;
+    public Provider<TooltipOverlay> tooltipOverlay;
 
     @Inject
-    private Provider<TooltipOverlay> tooltipOverlay;
+    public Provider<WorldMapOverlay> worldMapOverlay;
 
-    @Inject
-    private Provider<WorldMapOverlay> worldMapOverlay;
-
-    @Inject
-    @Nullable
-    private Applet applet;
 
     @Inject
     @Nullable
@@ -133,11 +124,11 @@ public class RuneLite extends net.runelite.client.RuneLite {
 
     @Inject
     @Nullable
-    private RuntimeConfig runtimeConfig;
+    public Applet applet;
 
     @Inject
     @Nullable
-    private TelemetryClient telemetryClient;
+    private RuntimeConfig runtimeConfig;
 
     /**
      * Launches a single instance of RuneLite
@@ -154,13 +145,19 @@ public class RuneLite extends net.runelite.client.RuneLite {
         setDefaultUncaughtExceptionHandler();
         initializeClient(optionSpecs, options);
     }
+
+    /**
+     * Handles the command-line arguments using the OptionParser passed through and assigns our option specs
+     * accordingly and then returns them for use
+     * @param parser    The parser to use for handling the command-line arguments
+     * @return          The ArgumentAcceptingOptionSpec array (the fields for our options)
+     */
     public static ArgumentAcceptingOptionSpec<?>[] handleParsing(OptionParser parser) {
-        parser.accepts("bot-runelite", "Starts client in Bot Runelite mode");
+        parser.accepts("bot-runelite", "Starts the client in Bot RuneLite mode");
         parser.accepts("headless", "Starts a client without the additional features of RuneLite");
         parser.accepts("developer-mode", "Enable developer tools");
         parser.accepts("ea", "Enable assertions");
         parser.accepts("debug", "Show extra debugging output");
-        parser.accepts("safe-mode", "Disables external plugins and the GPU plugin");
         parser.accepts("insecure-skip-tls-verification", "Disables TLS verification");
         parser.accepts("jav_config", "jav_config url")
                 .withRequiredArg()
@@ -181,12 +178,13 @@ public class RuneLite extends net.runelite.client.RuneLite {
                 .withRequiredArg()
                 .ofType(ClientUpdateCheckMode.class)
                 .defaultsTo(ClientUpdateCheckMode.AUTO)
-                .withValuesConvertedBy(new EnumConverter<ClientUpdateCheckMode>(ClientUpdateCheckMode.class) {
+                .withValuesConvertedBy(new EnumConverter<>(ClientUpdateCheckMode.class) {
                     @Override
                     public ClientUpdateCheckMode convert(String v) {
                         return super.convert(v.toUpperCase());
                     }
                 });
+
         final ArgumentAcceptingOptionSpec<String> proxyInfo = parser
                 .accepts("proxy", "Designates a proxy ip address to be used to make the bot server connections")
                 .withRequiredArg().ofType(String.class);
@@ -194,7 +192,14 @@ public class RuneLite extends net.runelite.client.RuneLite {
         return (ArgumentAcceptingOptionSpec<?>[]) new ArgumentAcceptingOptionSpec[]{sessionfile, configfile, updateMode, proxyInfo};
     }
 
+    /**
+     * @param parser        The parser responsible for reading the command-line arguments
+     * @param optionSpecs   The associated fields to the corresponding options
+     * @param options       The actual set of options required for initialization
+     * @throws IOException  Any input/output exception
+     */
     public static void handleOptions(OptionParser parser, ArgumentAcceptingOptionSpec<?>[] optionSpecs, OptionSet options) throws IOException {
+
         if (options.has("help")) {
             parser.printHelpOn(System.out);
             System.exit(0);
@@ -224,23 +229,27 @@ public class RuneLite extends net.runelite.client.RuneLite {
                 });
             }
         }
-
-        if (options.has("debug")) {
-            final Logger logger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-            logger.setLevel(Level.DEBUG);
-        }
     }
 
+    /**
+     * Creates a thread to handle uncaught exceptions created by RuneLite
+     */
     public static void setDefaultUncaughtExceptionHandler() {
         Thread.setDefaultUncaughtExceptionHandler((thread, throwable) ->
         {
             log.error("Uncaught exception:", throwable);
-            if (throwable instanceof AbstractMethodError) {
+            if (throwable instanceof AbstractMethodError)
+            {
                 log.error("Classes are out of date; Build with maven again.");
             }
         });
     }
 
+    /**
+     * Initializes the RuneLite processes after having parsed and handled the command line arguments
+     * @param optionSpecs   The associated fields to the corresponding options
+     * @param options       The actual set of options required for initialization
+     */
     public static void initializeClient(ArgumentAcceptingOptionSpec<?>[] optionSpecs, OptionSet options) {
         final OkHttpClient okHttpClient = buildHttpClient(options.has("insecure-skip-tls-verification"));
         RuneLiteAPI.CLIENT = okHttpClient;
@@ -248,7 +257,10 @@ public class RuneLite extends net.runelite.client.RuneLite {
         try
         {
             final RuntimeConfigLoader runtimeConfigLoader = new RuntimeConfigLoader(okHttpClient);
-            final ClientLoader clientLoader = new ClientLoader(okHttpClient, options.valueOf(optionSpecs[Options.UPDATE_MODE.getIndex()].ofType(ClientUpdateCheckMode.class)), runtimeConfigLoader, (String) options.valueOf("jav_config"));
+            final ClientLoader clientLoader = new ClientLoader(okHttpClient,
+                    options.valueOf(optionSpecs[Options.UPDATE_MODE.getIndex()].ofType(ClientUpdateCheckMode.class)),
+                    runtimeConfigLoader,
+                    (String) options.valueOf("jav_config"));
 
             new Thread(() ->
             {
@@ -259,9 +271,6 @@ public class RuneLite extends net.runelite.client.RuneLite {
             PROFILES_DIR.mkdirs();
 
             final RuntimeMXBean runtime = ManagementFactory.getRuntimeMXBean();
-            // This includes arguments from _JAVA_OPTIONS, which are parsed after command line flags and applied to
-            // the global VM args
-            log.info("Java VM arguments: {}", String.join(" ", runtime.getInputArguments()));
 
             final long start = System.currentTimeMillis();
             injector = Guice.createInjector(new BadModule(
@@ -273,7 +282,6 @@ public class RuneLite extends net.runelite.client.RuneLite {
                     options.valueOf(optionSpecs[Options.SESSION_FILE.getIndex()].ofType(File.class)),
                     options.valueOf(optionSpecs[Options.CONFIG_FILE.getIndex()].ofType(File.class))
             ));
-
             setInjector(injector);
             injector.getInstance(BadLite.class).start();
 
@@ -295,9 +303,16 @@ public class RuneLite extends net.runelite.client.RuneLite {
         }
     }
 
+    /**
+     * Launches a client with the bare minimum of settings needed. This is used for the sub-bots and do not use
+     * the additional initializations that the standard RuneLite start method does.
+     * @throws Exception    Any exception the client, bot, or RuneLite might throw.
+     */
     public void bareStart() throws Exception {
         // Load RuneLite or Vanilla client
         final boolean isOutdated = client == null;
+
+        setupSystemProps();
 
         if (!isOutdated)
         {
@@ -305,13 +320,9 @@ public class RuneLite extends net.runelite.client.RuneLite {
             injector.injectMembers(client);
         }
 
-        setupSystemProps();
-
         // Start the applet
         if (applet != null)
         {
-            copyJagexCache();
-
             // Client size must be set prior to init
             applet.setSize(Constants.GAME_FIXED_SIZE);
 
@@ -339,8 +350,6 @@ public class RuneLite extends net.runelite.client.RuneLite {
         // Start client session
         clientSessionManager.start();
         eventBus.register(clientSessionManager);
-
-        // Initialize UI
         clientUI.init();
 
         // Register event listeners
@@ -350,7 +359,8 @@ public class RuneLite extends net.runelite.client.RuneLite {
         eventBus.register(overlayManager);
         eventBus.register(configManager);
 
-        if (!isOutdated) {
+        if (!isOutdated)
+        {
             // Add core overlays
             WidgetOverlay.createOverlays(overlayManager, client).forEach(overlayManager::add);
             overlayManager.add(worldMapOverlay.get());
@@ -358,6 +368,10 @@ public class RuneLite extends net.runelite.client.RuneLite {
         }
     }
 
+    /**
+     * RuneLite method
+     * Converts config files paths to whatever directory needed
+     */
     private static class ConfigFileConverter implements ValueConverter<File>
     {
         @Override
@@ -397,20 +411,19 @@ public class RuneLite extends net.runelite.client.RuneLite {
         }
     }
 
-    @VisibleForTesting
+    /**
+     * RuneLite method
+     * Establishes the HTTPClient (Request, Response, Caching, etc)
+     * @param insecureSkipTlsVerification   determine whether to skip TLSVerification
+     * @return  the built OkHttpClient
+     */
     static OkHttpClient buildHttpClient(boolean insecureSkipTlsVerification)
     {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .pingInterval(30, TimeUnit.SECONDS)
-                .addInterceptor(chain ->
+                .addNetworkInterceptor(chain ->
                 {
-                    Request request = chain.request();
-                    if (request.header("User-Agent") != null)
-                    {
-                        return chain.proceed(request);
-                    }
-
-                    Request userAgentRequest = request
+                    Request userAgentRequest = chain.request()
                             .newBuilder()
                             .header("User-Agent", USER_AGENT)
                             .build();
@@ -455,6 +468,13 @@ public class RuneLite extends net.runelite.client.RuneLite {
         Object unused = DateTimeFormatter.BASIC_ISO_DATE;
     }
 
+    /**
+     * RuneLite method
+     * Uncertain behavior
+     * Looks to verify client trust?
+     * #todo Might need to investigate further
+     * @param okHttpClientBuilder   The OkHttpClientBuilder object that handles creating an OkHttpClient
+     */
     private static void setupInsecureTrustManager(OkHttpClient.Builder okHttpClientBuilder)
     {
         try
@@ -485,38 +505,6 @@ public class RuneLite extends net.runelite.client.RuneLite {
         catch (NoSuchAlgorithmException | KeyManagementException ex)
         {
             log.warn("unable to setup insecure trust manager", ex);
-        }
-    }
-
-    private static void copyJagexCache()
-    {
-        Path from = Paths.get(System.getProperty("user.home"), "jagexcache");
-        Path to = Paths.get(System.getProperty("user.home"), ".runelite", "jagexcache");
-        if (Files.exists(to) || !Files.exists(from))
-        {
-            return;
-        }
-
-        log.info("Copying jagexcache from {} to {}", from, to);
-
-        // Recursively copy path https://stackoverflow.com/a/50418060
-        try (Stream<Path> stream = Files.walk(from))
-        {
-            stream.forEach(source ->
-            {
-                try
-                {
-                    Files.copy(source, to.resolve(from.relativize(source)), COPY_ATTRIBUTES);
-                }
-                catch (IOException e)
-                {
-                    throw new RuntimeException(e);
-                }
-            });
-        }
-        catch (Exception e)
-        {
-            log.warn("unable to copy jagexcache", e);
         }
     }
 
@@ -552,4 +540,5 @@ public class RuneLite extends net.runelite.client.RuneLite {
             return index;
         }
     }
+
 }

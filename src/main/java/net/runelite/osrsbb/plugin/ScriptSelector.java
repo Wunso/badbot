@@ -30,6 +30,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static net.runelite.osrsbb.util.StringUtil.convertIntelliJPath;
+
 public class ScriptSelector extends JDialog implements ScriptListener {
     public static void main(String[] args) {
         new ScriptSelector(null, null).setVisible(true);
@@ -57,8 +59,8 @@ public class ScriptSelector extends JDialog implements ScriptListener {
     public MaterialTab buttonStop;
     public MaterialTab buttonReload;
 
-    //static String TEST_PATH = convertIntelliJPath(net.runelite.osrsbb.testsScript.Test.class, "Test.class");
-    //static ScriptSource SRC_TEST = new FileScriptSource(new File(TEST_PATH));
+    static String TEST_PATH = convertIntelliJPath(net.runelite.osrsbb.testscript.Test.class, "Test.class");
+    static ScriptSource SRC_TEST = new FileScriptSource(new File(TEST_PATH));
     static ScriptSource SRC_SOURCES = new FileScriptSource(new File(GlobalConfiguration.Paths.getScriptsSourcesDirectory()));
     static ScriptSource SRC_PRECOMPILED = new FileScriptSource(new File(GlobalConfiguration.Paths.getScriptsPrecompiledDirectory()));
     static ScriptSource SRC_BUNDLED = (GlobalConfiguration.RUNNING_FROM_JAR) ? new FileScriptSource(new File(GlobalConfiguration.Paths.getScriptsExtractedCache())) : new FileScriptSource(new File("." + File.separator + GlobalConfiguration.Paths.SCRIPTS_NAME_SRC));
@@ -101,7 +103,6 @@ public class ScriptSelector extends JDialog implements ScriptListener {
      * Then using jaxax.Compiler it is compiled and is created as a temporary file in memory (could cause memory issues)
      *
      */
-    /*
     private void generateTestScripts() {
         File testScriptDir = new File(TEST_PATH);
         try {
@@ -135,12 +136,11 @@ public class ScriptSelector extends JDialog implements ScriptListener {
             e.printStackTrace();
         }
     }
-    */
+
     /**
      * Deletes the temporary files made in the testScriptDirectory
      */
 
-    /*
     private synchronized void deleteTemporaryFiles() {
         File testScriptDir = new File(TEST_PATH.toString());
         if (testScriptDir.isDirectory()) {
@@ -152,7 +152,6 @@ public class ScriptSelector extends JDialog implements ScriptListener {
             }
         }
     }
-    */
     /**
      * Updates the script panel
      */
@@ -174,15 +173,15 @@ public class ScriptSelector extends JDialog implements ScriptListener {
         scripts.clear();
         File testFile = new File(GlobalConfiguration.Paths.getScriptsSourcesDirectory());
         FileScriptSource test = new FileScriptSource(testFile);
-        //deleteTemporaryFiles();
+        deleteTemporaryFiles();
         scripts.addAll(SRC_BUNDLED.list());
         scripts.addAll(SRC_PRECOMPILED.list());
         scripts.addAll(SRC_SOURCES.list());
-        //generateTestScripts();
-        //scripts.addAll(SRC_TEST.list());
+        generateTestScripts();
+        scripts.addAll(SRC_TEST.list());
         if (search != null)
             model.search(search.getText());
-        //deleteTemporaryFiles();
+        deleteTemporaryFiles();
         table = (table == null) ? getTable(0, 70, 45, 30) : table;
     }
 

@@ -74,14 +74,6 @@ sourceSets {
     }
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from components.java
-        }
-    }
-}
-
 project.configurations.implementation.setCanBeResolved(true)
 jar {
     manifest.attributes('Main-Class': 'net.runelite.osrsbb.launcher.Application')
@@ -113,9 +105,9 @@ task badRun(type: JavaExec) {
 
 task headlessBotRun(type: JavaExec) {
     group = "Execution"
-    description = "Runs the main method within RSB"
+    description = "Runs the main method within Badbot"
     classpath = sourceSets.main.runtimeClasspath + sourceSets.main.compileClasspath
-    getMainClass() set "net.runelite.rsb.botLauncher.Application"
+    getMainClass() set "net.runelite.osrsbb.launcher.Application"
     jvmArgs "-debug"
     args "--bot-runelite --developer-mode --headless".split(" ")
 }

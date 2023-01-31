@@ -5,6 +5,7 @@ import com.google.common.math.DoubleMath;
 import com.google.gson.Gson;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.Singleton;
 import com.google.inject.binder.ConstantBindingBuilder;
 import com.google.inject.name.Names;
 
@@ -17,7 +18,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Supplier;
 import javax.annotation.Nullable;
 import javax.inject.Named;
-import javax.inject.Singleton;
 
 import lombok.AllArgsConstructor;
 
@@ -200,7 +200,7 @@ public class BadModule extends AbstractModule
     }
 
     @Provides
-    @Singleton
+    @javax.inject.Singleton
     TelemetryClient provideTelemetry(
             OkHttpClient okHttpClient,
             Gson gson,
