@@ -103,6 +103,7 @@ public class ScriptSelector extends JDialog implements ScriptListener {
      * Then using jaxax.Compiler it is compiled and is created as a temporary file in memory (could cause memory issues)
      *
      */
+    /*
     private void generateTestScripts() {
         File testScriptDir = new File(TEST_PATH);
         try {
@@ -136,11 +137,13 @@ public class ScriptSelector extends JDialog implements ScriptListener {
             e.printStackTrace();
         }
     }
+     */
 
     /**
      * Deletes the temporary files made in the testScriptDirectory
      */
 
+    /*
     private synchronized void deleteTemporaryFiles() {
         File testScriptDir = new File(TEST_PATH.toString());
         if (testScriptDir.isDirectory()) {
@@ -152,6 +155,8 @@ public class ScriptSelector extends JDialog implements ScriptListener {
             }
         }
     }
+
+     */
     /**
      * Updates the script panel
      */
@@ -173,15 +178,15 @@ public class ScriptSelector extends JDialog implements ScriptListener {
         scripts.clear();
         File testFile = new File(GlobalConfiguration.Paths.getScriptsSourcesDirectory());
         FileScriptSource test = new FileScriptSource(testFile);
-        deleteTemporaryFiles();
+        //deleteTemporaryFiles();
         scripts.addAll(SRC_BUNDLED.list());
         scripts.addAll(SRC_PRECOMPILED.list());
         scripts.addAll(SRC_SOURCES.list());
-        generateTestScripts();
+        //generateTestScripts();
         scripts.addAll(SRC_TEST.list());
         if (search != null)
             model.search(search.getText());
-        deleteTemporaryFiles();
+        //deleteTemporaryFiles();
         table = (table == null) ? getTable(0, 70, 45, 30) : table;
     }
 

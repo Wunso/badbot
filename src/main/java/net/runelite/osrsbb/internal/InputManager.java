@@ -13,7 +13,7 @@ import java.awt.event.MouseEvent;
 @SuppressWarnings("removal")
 public class InputManager {
     private final java.util.Random random = new java.util.Random();
-    private final MouseHandler mouseHandler = new MouseHandler(this);
+    //private final MouseHandler mouseHandler = new MouseHandler(this);
     private final BadLite bot;
     private byte dragLength = 0;
 
@@ -248,7 +248,7 @@ public class InputManager {
                     break;
             }
         }
-        windMouse(x, y);
+        //windMouse(x, y);
         //windMouse(speed, thisX, thisY, random(x, x + randomX), random(y, y + randomY));
     }
 
@@ -261,7 +261,7 @@ public class InputManager {
     public void dragMouse(final int x, final int y) {
         pressMouse(getX(), getY(), true);
         sleepNoException(random(300, 500));
-        windMouse(getX(), getY(), x, y);
+        //windMouse(getX(), getY(), x, y);
         sleepNoException(random(300, 500));
         releaseMouse(x, y, true);
     }
@@ -321,7 +321,7 @@ public class InputManager {
         }
     }
 
-    /**
+    /*
      * Moves the mouse from a certain point to another at the default speed.
      *
      * @param curX    the x value to move from
@@ -330,11 +330,11 @@ public class InputManager {
      * @param targetY the y value to move to
      * @see #windMouse(int, int, int, int, int)
      */
-    public void windMouse(final int curX, final int curY, final int targetX, final int targetY) {
-        windMouse(MouseHandler.DEFAULT_MOUSE_SPEED, curX, curY, targetX, targetY);
-    }
+    //public void windMouse(final int curX, final int curY, final int targetX, final int targetY) {
+        //windMouse(MouseHandler.DEFAULT_MOUSE_SPEED, curX, curY, targetX, targetY);
+    //}
 
-    /**
+    /*
      * Moves the mouse from a certain point to another, with specified speed.
      *
      * @param speed   the lower, the faster.
@@ -343,6 +343,7 @@ public class InputManager {
      * @param targetX the x value to move to
      * @param targetY the y value to move to
      */
+    /*
     @Deprecated
     public void windMouse(final int speed, final int curX, final int curY, final int targetX, final int targetY) {
         mouseHandler.moveMouse(speed, curX, curY, targetX, targetY, 0, 0);
@@ -351,6 +352,8 @@ public class InputManager {
     public void windMouse(final int x, final int y) {
         mouseHandler.moveMouse(x, y);
     }
+
+     */
 
     public int random(final int min, final int max) {
         final int n = Math.abs(max - min);
