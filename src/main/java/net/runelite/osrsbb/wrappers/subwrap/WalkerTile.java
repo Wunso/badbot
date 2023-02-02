@@ -8,6 +8,7 @@ import net.runelite.osrsbb.api.MethodContext;
 import net.runelite.osrsbb.api.Web;
 import net.runelite.osrsbb.wrappers.RSTile;
 import net.runelite.osrsbb.wrappers.common.Clickable07;
+import net.runelite.osrsbb.wrappers.common.Positionable;
 
 public class WalkerTile extends RSTile implements Clickable07 {
     private MethodContext ctx;
@@ -163,13 +164,13 @@ public class WalkerTile extends RSTile implements Clickable07 {
         ANIMABLE, LOCAL, WORLD, SCENE;
     }
 
-    //public int distanceTo(Positionable positionable) {
-        //return (int) ctx.calc.distanceBetween(this.toWorldTile(), positionable.getLocation());
-    //}
+    public int distanceTo(Positionable positionable) {
+        return (int) ctx.calc.distanceBetween(this.toWorldTile(), positionable.getLocation());
+    }
 
-    //public double distanceToDouble(Positionable positionable) {
-        //return ctx.calc.distanceBetween(this.toWorldTile(), positionable.getLocation());
-    //}
+    public double distanceToDouble(Positionable positionable) {
+        return ctx.calc.distanceBetween(this.toWorldTile(), positionable.getLocation());
+    }
 
     public WalkerTile translate(int x, int y) {
         this.x = this.x + x;

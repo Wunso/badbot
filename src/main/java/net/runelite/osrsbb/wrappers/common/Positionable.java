@@ -1,5 +1,6 @@
 package net.runelite.osrsbb.wrappers.common;
 
+import net.runelite.osrsbb.wrappers.RSTile;
 import net.runelite.osrsbb.wrappers.subwrap.WalkerTile;
 
 import net.runelite.api.coords.WorldPoint;
@@ -42,6 +43,6 @@ public interface Positionable {
      * Turns the camera to face the entity
      * @return <code>True</code> if the camera has been turned to face the entity
      */
-    //boolean turnTo();
+    boolean turnTo();
 
 }
