@@ -6,6 +6,13 @@ plugins {
 group = 'com.github.Wunso'
 version = '0.0.1'
 
+java {
+    toolchain {
+        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_11
+    }
+}
+
 repositories {
     mavenLocal()
     maven { url 'https://jitpack.io' }
@@ -72,8 +79,8 @@ dependencies {
         exclude group: 'ch.qos.logback', module: 'logback-classic'
     }
 
-    implementation group: 'com.github.Wunso', name: 'badbotplugin', version:'410c1ebb0d'
-    implementation 'com.github.Wunso:badbotdax:26f20c5c6d'
+    //implementation group: 'com.github.Wunso', name: 'badbotplugin', version:'95eb5c4835'
+    //implementation 'com.github.Wunso:badbotdax:26f20c5c6d'
     implementation group: 'com.github.joonasvali.naturalmouse', name: 'naturalmouse', version: '2.0.3'
     implementation group: 'javassist', name: 'javassist', version: '3.12.1.GA'
     implementation group: 'net.sf.jopt-simple', name:'jopt-simple', version: '5.0.4'
