@@ -5,13 +5,15 @@ import net.runelite.api.Tile;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.osrsbb.api.MethodContext;
+import net.runelite.osrsbb.wrappers.common.Positionable;
+import net.runelite.osrsbb.wrappers.subwrap.WalkerTile;
 
 /**
  * A class to assign coordinates and game-levels to tile objects for internal use
  * Should be using World location values. Not local or scene.
  */
 @Slf4j
-public class RSTile {
+public class RSTile implements Positionable {
     private final int NO_PLANE_SET = -99;
     protected int x;
     protected int y;
@@ -149,4 +151,10 @@ public class RSTile {
             super(message);
         }
     }
+
+    @Override
+    public WalkerTile getLocation() { return new WalkerTile(this); }
+
+    @Override
+    public boolean turnTo() {return false;}
 }

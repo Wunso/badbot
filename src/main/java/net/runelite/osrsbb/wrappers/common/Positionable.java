@@ -1,9 +1,6 @@
 package net.runelite.osrsbb.wrappers.common;
 
-import net.runelite.osrsbb.wrappers.RSTile;
 import net.runelite.osrsbb.wrappers.subwrap.WalkerTile;
-
-import net.runelite.api.coords.WorldPoint;
 
 /**
  * An interface for position related information regarding sub-classes

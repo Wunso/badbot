@@ -5,11 +5,12 @@ import net.runelite.api.TileItem;
 import net.runelite.osrsbb.api.MethodContext;
 import net.runelite.osrsbb.api.MethodProvider;
 import net.runelite.osrsbb.wrappers.common.Clickable07;
+import net.runelite.osrsbb.wrappers.common.Positionable;
 import net.runelite.osrsbb.wrappers.subwrap.WalkerTile;
 
 import java.util.List;
 
-public class RSGroundItem extends MethodProvider implements Clickable07 {
+public class RSGroundItem extends MethodProvider implements Clickable07, Positionable {
     private final RSItem groundItem;
     private final RSTile location;
 
