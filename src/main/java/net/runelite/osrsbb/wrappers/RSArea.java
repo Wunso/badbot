@@ -6,6 +6,11 @@ import net.runelite.osrsbb.wrappers.common.Positionable;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Represents a shape made of RSTiles.
+ *
+ * @author GigiaJ
+ */
 public class RSArea {
     private final TileArea area;
     private final int plane;
