@@ -10,7 +10,7 @@ import net.runelite.osrsbb.wrappers.RSTile;
 import net.runelite.osrsbb.wrappers.common.Clickable07;
 import net.runelite.osrsbb.wrappers.common.Positionable;
 
-public class WalkerTile extends RSTile implements Clickable07 {
+public class WalkerTile extends RSTile implements Clickable07, Positionable {
     private MethodContext ctx;
 
     private TYPES type;
@@ -158,6 +158,20 @@ public class WalkerTile extends RSTile implements Clickable07 {
 
     public TYPES getType() {
         return type;
+    }
+
+    @Override
+    public WalkerTile getLocation() {
+        return this;
+    }
+
+    @Override
+    public boolean turnTo() {
+        if (isClickable()) {
+            ctx.camera.turnTo(this.toWorldTile());
+            return true;
+        }
+        return false;
     }
 
     public enum TYPES {
