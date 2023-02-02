@@ -1,16 +1,24 @@
 package net.runelite.osrsbb.internal;
 
+import com.github.joonasvali.naturalmouse.api.MouseMotionFactory;
+import com.github.joonasvali.naturalmouse.support.*;
+import com.github.joonasvali.naturalmouse.util.FactoryTemplates;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.osrsbb.internal.naturalmouse.RSBSystemCalls;
 
 import java.awt.*;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 @Slf4j
 public class MouseHandler {
+    ExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     /**
      * The default mouse speed. This is the delay in ms between actual mouse
      * moves. Lower is faster.
      */
-    public static final int DEFAULT_MOUSE_SPEED = 10;
+    public static final int DEFAULT_MOUSE_SPEED = 50;
 
     /**
      * The maximum distance (in pixels) to move the mouse after clicks in either
@@ -249,7 +257,7 @@ public class MouseHandler {
         MouseHandler.adaptiveMidpoints(spline);
         return spline.toArray(new Point[spline.size()]);
     }
-    /*
+
     private final InputManager inputManager;
     private MouseMotionNature nature;
     private MouseMotionFactory motionFactory;
@@ -264,17 +272,12 @@ public class MouseHandler {
         nature.setNoiseProvider(new DefaultNoiseProvider(2.0D));
         nature.setSpeedManager(new DefaultSpeedManager());
         nature.setOvershootManager(new DefaultOvershootManager(new Random()));
-        nature.setEffectFadeSteps(15);
-        nature.setMinSteps(10);
         nature.setMouseInfo(new DefaultMouseInfoAccessor());
-        nature.setReactionTimeBaseMs(20);
-        nature.setReactionTimeVariationMs(120);
-        nature.setTimeToStepsDivider(8.0D);
 
         this.motionFactory = FactoryTemplates.createAverageComputerUserMotionFactory(nature);
         motionFactory.setMouseInfo(() -> new Point(inputManager.getX(), inputManager.getY()));
     }
-    */
+
     /**
      * Moves the mouse from a position to another position with randomness
      * applied.
@@ -288,8 +291,6 @@ public class MouseHandler {
      * @param randX randomness in the x direction
      * @param randY randomness in the y direction
      */
-
-    /*
     @Deprecated
     public void moveMouse(final int speed, final int x1, final int y1, final int x2, final int y2, int randX, int randY) {
         if ((x2 == -1) && (y2 == -1))
@@ -331,14 +332,11 @@ public class MouseHandler {
         }
     }
 
-     */
-    /*
     public void moveMouse(final int x, final int y) {
         try {
             motionFactory.move(x, y);
         } catch (InterruptedException e) {
             log.debug("Mouse move failed to execute properly.", e);
         }
-     }
-     */
+    }
 }

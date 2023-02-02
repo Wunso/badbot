@@ -11,6 +11,8 @@ import net.runelite.api.hooks.DrawCallbacks;
 import net.runelite.api.vars.AccountType;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
+import net.runelite.osrsbb.api.SceneEntity;
+import net.runelite.osrsbb.api.events.MenuAutomated;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -433,9 +435,7 @@ public abstract class BaseClientWrapper extends Applet implements Client {
     }
 
     @Override
-    public MenuEntry createMenuEntry(int idx) {
-        return wrappedClient.createMenuEntry(idx);
-    }
+    public MenuEntry createMenuEntry(int idx) { return wrappedClient.createMenuEntry(idx); }
 
     @Override
     public MenuEntry[] getMenuEntries() {
@@ -1520,4 +1520,28 @@ public abstract class BaseClientWrapper extends Applet implements Client {
     public void setIdleTimeout(int ticks) {
         wrappedClient.setIdleTimeout(ticks);
     }
+
+    public void interact(int identifier, int opcode, int clickX, int clickY) {
+        interact(identifier, opcode, clickX, clickY);
+    }
+
+    public void interact(int identifier, int opcode, int param0, int param1, int clickX, int clickY) {
+        interact(identifier, opcode, param0, param1, clickX, clickY, null);
+    }
+
+    public void interact(int identifier, int opcode, int param0, int param1, int clickX, int clickY, SceneEntity sceneEntity) {
+        interact(
+                MenuAutomated.builder()
+                        .identifier(identifier)
+                        .opcode(MenuAction.of(opcode))
+                        .param0(param0)
+                        .param1(param1)
+                        .clickX(clickX)
+                        .clickY(clickY)
+                        .entity(sceneEntity)
+                        .build()
+        );
+    }
+
+    public void interact(MenuAutomated menuAutomated){};
 }

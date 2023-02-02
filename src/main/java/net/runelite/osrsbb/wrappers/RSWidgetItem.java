@@ -2,10 +2,12 @@ package net.runelite.osrsbb.wrappers;
 
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetItem;
-import net.runelite.osrsbb.methods.MethodContext;
-import net.runelite.osrsbb.methods.MethodProvider;
+import net.runelite.osrsbb.api.MethodContext;
+import net.runelite.osrsbb.api.MethodProvider;
 
 import java.awt.*;
+
+import static net.runelite.osrsbb.api.Methods.sleep;
 
 public class RSWidgetItem extends MethodProvider {
     private final WidgetItem item;

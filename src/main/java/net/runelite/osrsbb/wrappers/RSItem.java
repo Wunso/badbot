@@ -2,8 +2,8 @@ package net.runelite.osrsbb.wrappers;
 
 import net.runelite.api.TileItem;
 import net.runelite.cache.definitions.ItemDefinition;
-import net.runelite.osrsbb.methods.MethodContext;
-import net.runelite.osrsbb.methods.MethodProvider;
+import net.runelite.osrsbb.api.MethodContext;
+import net.runelite.osrsbb.api.MethodProvider;
 import net.runelite.osrsbb.wrappers.common.CacheProvider;
 import net.runelite.osrsbb.wrappers.common.Clickable07;
 import net.runelite.osrsbb.wrappers.subwrap.RSMenuNode;

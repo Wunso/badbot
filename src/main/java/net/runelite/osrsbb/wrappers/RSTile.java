@@ -4,16 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Tile;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
-import net.runelite.osrsbb.methods.MethodContext;
-import net.runelite.osrsbb.wrappers.common.Positionable;
-import net.runelite.osrsbb.wrappers.subwrap.WalkerTile;
+import net.runelite.osrsbb.api.MethodContext;
 
 /**
  * A class to assign coordinates and game-levels to tile objects for internal use
  * Should be using World location values. Not local or scene.
  */
 @Slf4j
-public class RSTile implements Positionable {
+public class RSTile {
     private final int NO_PLANE_SET = -99;
     protected int x;
     protected int y;
@@ -150,15 +148,5 @@ public class RSTile implements Positionable {
         NoPlaneException(String message) {
             super(message);
         }
-    }
-
-    @Override
-    public WalkerTile getLocation() {
-        return new WalkerTile(this);
-    }
-
-    @Override
-    public boolean turnTo() {
-        return false;
     }
 }

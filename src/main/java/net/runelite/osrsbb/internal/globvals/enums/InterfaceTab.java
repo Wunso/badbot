@@ -5,7 +5,7 @@ import net.runelite.osrsbb.internal.globvals.GlobalWidgetInfo;
 
 import java.awt.event.KeyEvent;
 
-import static net.runelite.osrsbb.methods.MethodProvider.methods;
+import static net.runelite.osrsbb.api.MethodProvider.methods;
 
 public enum InterfaceTab {
     COMBAT("Combat Options", KeyEvent.VK_F5,

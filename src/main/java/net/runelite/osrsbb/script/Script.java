@@ -5,8 +5,8 @@ import net.runelite.osrsbb.event.EventMulticaster;
 import net.runelite.osrsbb.event.listeners.PaintListener;
 import net.runelite.osrsbb.internal.BreakHandler;
 import net.runelite.osrsbb.launcher.BadLite;
-import net.runelite.osrsbb.methods.MethodContext;
-import net.runelite.osrsbb.methods.Methods;
+import net.runelite.osrsbb.api.MethodContext;
+import net.runelite.osrsbb.api.Methods;
 import net.runelite.osrsbb.plugin.AccountManager;
 import net.runelite.osrsbb.util.Timer;
 

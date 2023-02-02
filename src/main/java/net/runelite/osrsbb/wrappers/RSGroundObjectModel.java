@@ -2,7 +2,7 @@ package net.runelite.osrsbb.wrappers;
 
 import net.runelite.api.Model;
 import net.runelite.api.Tile;
-import net.runelite.osrsbb.methods.MethodContext;
+import net.runelite.osrsbb.api.MethodContext;
 
 public class RSGroundObjectModel extends RSModel {
     private final Tile tile;

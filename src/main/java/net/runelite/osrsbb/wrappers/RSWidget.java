@@ -3,13 +3,15 @@ package net.runelite.osrsbb.wrappers;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.osrsbb.internal.globvals.GlobalWidgetInfo;
-import net.runelite.osrsbb.methods.MethodContext;
-import net.runelite.osrsbb.methods.MethodProvider;
+import net.runelite.osrsbb.api.MethodContext;
+import net.runelite.osrsbb.api.MethodProvider;
 import net.runelite.osrsbb.wrappers.common.Clickable07;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static net.runelite.osrsbb.api.Methods.sleep;
 
 public class RSWidget extends MethodProvider implements Clickable07 {
     private final int id;

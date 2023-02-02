@@ -1,7 +1,7 @@
 package net.runelite.osrsbb.wrappers.subwrap;
 
-import net.runelite.osrsbb.methods.Interfaces;
-import net.runelite.osrsbb.methods.MethodContext;
+import net.runelite.osrsbb.api.Interfaces;
+import net.runelite.osrsbb.api.MethodContext;
 
 public class NPCChat extends Interfaces {
     public NPCChat(MethodContext ctx) {

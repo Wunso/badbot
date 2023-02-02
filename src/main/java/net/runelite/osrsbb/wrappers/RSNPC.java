@@ -3,14 +3,12 @@ package net.runelite.osrsbb.wrappers;
 import net.runelite.api.Actor;
 import net.runelite.api.NPC;
 import net.runelite.cache.definitions.NpcDefinition;
-import net.runelite.osrsbb.methods.MethodContext;
+import net.runelite.osrsbb.api.MethodContext;
 import net.runelite.osrsbb.wrappers.common.CacheProvider;
 
 import java.io.File;
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
-
-import static net.runelite.osrsbb.methods.MethodProvider.methods;
 
 public class RSNPC extends RSCharacter implements CacheProvider<NpcDefinition> {
     private static HashMap<Integer, NpcDefinition> npcDefinitionCache;

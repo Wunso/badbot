@@ -9,8 +9,8 @@ import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.geometry.SimplePolygon;
 import net.runelite.api.model.Jarvis;
 import net.runelite.osrsbb.internal.wrappers.Filter;
-import net.runelite.osrsbb.methods.MethodContext;
-import net.runelite.osrsbb.methods.MethodProvider;
+import net.runelite.osrsbb.api.MethodContext;
+import net.runelite.osrsbb.api.MethodProvider;
 
 import java.awt.*;
 import java.util.ArrayList;

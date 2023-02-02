@@ -1,8 +1,8 @@
 package net.runelite.osrsbb.wrappers.subwrap;
 
 import net.runelite.api.MenuEntry;
-import net.runelite.osrsbb.methods.Menu;
-import net.runelite.osrsbb.methods.MethodContext;
+import net.runelite.osrsbb.api.Menu;
+import net.runelite.osrsbb.api.MethodContext;
 
 import java.awt.*;
 

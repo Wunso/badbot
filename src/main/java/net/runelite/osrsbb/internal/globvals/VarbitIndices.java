@@ -142,4 +142,10 @@ public class VarbitIndices {
     public static final int TOGGLE_MAGIC_FILTER_LACKING_REQUIREMENTS_SPELLS = 12137;
     public static final int TOGGLE_ROOFS = 12378;
     public static final int TAB_CHAT_CHANNEL_SUBTAB_INDEX = 13071;
+
+    /**
+     * Antifire & Super antifire
+     */
+    public static final int ANTIFIRE = 3981;
+    public static final int SUPER_ANTIFIRE = 6101;
 }

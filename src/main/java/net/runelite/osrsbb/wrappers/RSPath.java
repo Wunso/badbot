@@ -1,7 +1,7 @@
 package net.runelite.osrsbb.wrappers;
 
-import net.runelite.osrsbb.methods.MethodContext;
-import net.runelite.osrsbb.methods.MethodProvider;
+import net.runelite.osrsbb.api.MethodContext;
+import net.runelite.osrsbb.api.MethodProvider;
 
 import java.util.EnumSet;
 

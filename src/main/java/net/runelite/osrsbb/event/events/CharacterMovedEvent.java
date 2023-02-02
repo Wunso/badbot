@@ -2,7 +2,7 @@ package net.runelite.osrsbb.event.events;
 
 import net.runelite.osrsbb.event.EventMulticaster;
 import net.runelite.osrsbb.event.listeners.CharacterMovedListener;
-import net.runelite.osrsbb.methods.MethodContext;
+import net.runelite.osrsbb.api.MethodContext;
 
 import java.util.EventListener;
 

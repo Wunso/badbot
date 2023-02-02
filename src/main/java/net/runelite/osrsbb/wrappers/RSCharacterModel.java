@@ -2,8 +2,8 @@ package net.runelite.osrsbb.wrappers;
 
 import net.runelite.api.Actor;
 import net.runelite.api.Model;
-import net.runelite.osrsbb.methods.Calculations;
-import net.runelite.osrsbb.methods.MethodContext;
+import net.runelite.osrsbb.api.Calculations;
+import net.runelite.osrsbb.api.MethodContext;
 
 public class RSCharacterModel extends RSModel {
     private final Actor c;

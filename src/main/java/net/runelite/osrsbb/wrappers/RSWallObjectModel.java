@@ -3,7 +3,7 @@ package net.runelite.osrsbb.wrappers;
 import net.runelite.api.Model;
 import net.runelite.api.TileObject;
 import net.runelite.api.WallObject;
-import net.runelite.osrsbb.methods.MethodContext;
+import net.runelite.osrsbb.api.MethodContext;
 
 public class RSWallObjectModel extends RSModel {
     private WallObject object;

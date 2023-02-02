@@ -4,13 +4,12 @@ import net.runelite.api.Perspective;
 import net.runelite.api.Point;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
-import net.runelite.osrsbb.methods.MethodContext;
-import net.runelite.osrsbb.methods.Web;
+import net.runelite.osrsbb.api.MethodContext;
+import net.runelite.osrsbb.api.Web;
 import net.runelite.osrsbb.wrappers.RSTile;
 import net.runelite.osrsbb.wrappers.common.Clickable07;
-import net.runelite.osrsbb.wrappers.common.Positionable;
 
-public class WalkerTile extends RSTile implements Clickable07, Positionable {
+public class WalkerTile extends RSTile implements Clickable07 {
     private MethodContext ctx;
 
     private TYPES type;
@@ -93,15 +92,6 @@ public class WalkerTile extends RSTile implements Clickable07, Positionable {
         return false;
     }
 
-    @Override
-    public boolean turnTo() {
-        if (isClickable()) {
-            ctx.camera.turnTo(this.toWorldTile());
-            return true;
-        }
-        return false;
-    }
-
     public boolean isOnScreen() {
         return ctx.calc.tileOnScreen(this.toWorldTile());
     }
@@ -173,18 +163,13 @@ public class WalkerTile extends RSTile implements Clickable07, Positionable {
         ANIMABLE, LOCAL, WORLD, SCENE;
     }
 
-    @Override
-    public WalkerTile getLocation() {
-        return this;
-    }
+    //public int distanceTo(Positionable positionable) {
+        //return (int) ctx.calc.distanceBetween(this.toWorldTile(), positionable.getLocation());
+    //}
 
-    public int distanceTo(Positionable positionable) {
-        return (int) ctx.calc.distanceBetween(this.toWorldTile(), positionable.getLocation());
-    }
-
-    public double distanceToDouble(Positionable positionable) {
-        return ctx.calc.distanceBetween(this.toWorldTile(), positionable.getLocation());
-    }
+    //public double distanceToDouble(Positionable positionable) {
+        //return ctx.calc.distanceBetween(this.toWorldTile(), positionable.getLocation());
+    //}
 
     public WalkerTile translate(int x, int y) {
         this.x = this.x + x;

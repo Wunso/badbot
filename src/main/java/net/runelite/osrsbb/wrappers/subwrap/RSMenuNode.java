@@ -1,6 +1,6 @@
 package net.runelite.osrsbb.wrappers.subwrap;
 
-import net.runelite.osrsbb.methods.Menu;
+import net.runelite.osrsbb.api.Menu;
 import net.runelite.osrsbb.wrappers.common.Clickable;
 
 import java.awt.Rectangle;

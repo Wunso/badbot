@@ -2,7 +2,7 @@ package net.runelite.osrsbb.util;
 
 import net.runelite.api.Skill;
 import net.runelite.osrsbb.launcher.BadLite;
-import net.runelite.osrsbb.methods.MethodContext;
+import net.runelite.osrsbb.api.MethodContext;
 
 import java.util.Arrays;
 

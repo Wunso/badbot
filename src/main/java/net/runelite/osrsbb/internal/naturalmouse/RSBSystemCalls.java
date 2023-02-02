@@ -1,4 +1,3 @@
-/*
 package net.runelite.osrsbb.internal.naturalmouse;
 
 import com.github.joonasvali.naturalmouse.api.SystemCalls;
@@ -32,4 +31,3 @@ public class RSBSystemCalls implements SystemCalls  {
         inputManager.hopMouse(x, y);
     }
 }
-*/

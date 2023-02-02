@@ -4,7 +4,7 @@ import net.runelite.api.Actor;
 import net.runelite.api.MenuEntry;
 import net.runelite.api.Player;
 import net.runelite.api.Point;
-import net.runelite.osrsbb.methods.MethodContext;
+import net.runelite.osrsbb.api.MethodContext;
 
 import java.lang.ref.SoftReference;
 

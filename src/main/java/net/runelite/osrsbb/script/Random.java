@@ -2,8 +2,8 @@ package net.runelite.osrsbb.script;
 
 import net.runelite.api.Point;
 import net.runelite.osrsbb.event.listeners.PaintListener;
-import net.runelite.osrsbb.methods.MethodContext;
-import net.runelite.osrsbb.methods.Methods;
+import net.runelite.osrsbb.api.MethodContext;
+import net.runelite.osrsbb.api.Methods;
 import net.runelite.osrsbb.service.Monitoring;
 
 import java.awt.*;

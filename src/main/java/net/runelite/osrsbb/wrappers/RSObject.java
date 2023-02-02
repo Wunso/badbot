@@ -4,11 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.cache.definitions.ObjectDefinition;
-import net.runelite.osrsbb.methods.MethodContext;
-import net.runelite.osrsbb.methods.MethodProvider;
+import net.runelite.osrsbb.api.MethodContext;
+import net.runelite.osrsbb.api.MethodProvider;
 import net.runelite.osrsbb.wrappers.common.CacheProvider;
 import net.runelite.osrsbb.wrappers.common.Clickable07;
-import net.runelite.osrsbb.wrappers.common.Positionable;
 import net.runelite.osrsbb.wrappers.subwrap.WalkerTile;
 
 /**
@@ -18,7 +17,7 @@ import net.runelite.osrsbb.wrappers.subwrap.WalkerTile;
  * RSObject can represent any {@link Type types} game object
  */
 @Slf4j
-public class RSObject extends MethodProvider implements Clickable07, Positionable, CacheProvider<ObjectDefinition> {
+public class RSObject extends MethodProvider implements Clickable07, CacheProvider<ObjectDefinition> {
     private final TileObject obj;
     private final Type type;
     private final int plane;

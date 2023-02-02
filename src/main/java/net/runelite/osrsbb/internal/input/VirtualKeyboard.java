@@ -2,7 +2,7 @@ package net.runelite.osrsbb.internal.input;
 
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.input.KeyListener;
-import net.runelite.osrsbb.methods.MethodContext;
+import net.runelite.osrsbb.api.MethodContext;
 
 import java.applet.Applet;
 import java.awt.*;

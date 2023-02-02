@@ -3,7 +3,7 @@ package net.runelite.osrsbb.launcher;
 import net.runelite.api.Point;
 import net.runelite.api.widgets.Widget;
 import net.runelite.osrsbb.internal.globvals.GlobalWidgetInfo;
-import net.runelite.osrsbb.methods.MethodContext;
+import net.runelite.osrsbb.api.MethodContext;
 import net.runelite.osrsbb.util.OutputObjectComparer;
 import net.runelite.osrsbb.wrappers.RSNPC;
 import net.runelite.osrsbb.wrappers.RSObject;

@@ -1,7 +1,7 @@
 package net.runelite.osrsbb.script;
 
-import net.runelite.osrsbb.methods.MethodContext;
-import net.runelite.osrsbb.methods.Methods;
+import net.runelite.osrsbb.api.MethodContext;
+import net.runelite.osrsbb.api.Methods;
 
 import java.util.EventListener;
 

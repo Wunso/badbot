@@ -189,7 +189,11 @@ public class RuneLite extends net.runelite.client.RuneLite {
                 .accepts("proxy", "Designates a proxy ip address to be used to make the bot server connections")
                 .withRequiredArg().ofType(String.class);
 
-        return (ArgumentAcceptingOptionSpec<?>[]) new ArgumentAcceptingOptionSpec[]{sessionfile, configfile, updateMode, proxyInfo};
+        final ArgumentAcceptingOptionSpec<Integer> worldInfo = parser
+                .accepts("world", "Designates this client to a certain world")
+                .withRequiredArg().ofType(Integer.class);
+
+        return (ArgumentAcceptingOptionSpec<?>[]) new ArgumentAcceptingOptionSpec[]{sessionfile, configfile, updateMode, proxyInfo, worldInfo};
     }
 
     /**
@@ -228,6 +232,11 @@ public class RuneLite extends net.runelite.client.RuneLite {
                     }
                 });
             }
+        }
+
+        if (options.has("world")) {
+            int world = options.valueOf(optionSpecs[Options.PROXY_INFO.getIndex()].ofType(Integer.class));
+            System.setProperty("cli.world", String.valueOf(world));
         }
     }
 

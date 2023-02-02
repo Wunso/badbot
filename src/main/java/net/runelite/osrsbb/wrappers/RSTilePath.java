@@ -1,9 +1,11 @@
 package net.runelite.osrsbb.wrappers;
 
-import net.runelite.osrsbb.methods.MethodContext;
+import net.runelite.osrsbb.api.MethodContext;
 
 import java.util.Arrays;
 import java.util.EnumSet;
+
+import static net.runelite.osrsbb.api.Methods.sleep;
 
 public class RSTilePath extends RSPath {
     protected RSTile[] tiles;

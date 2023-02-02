@@ -103,7 +103,7 @@ public class Application {
                 preParser.add("--headless");
                 BadClassLoader loader = new BadClassLoader("BotLoader" + bots.length + 1);
                 Class<?> c;
-                c = loader.loadClass("net.runelite.rsb.botLauncher.BotLite");
+                c = loader.loadClass("net.runelite.osrsbb.launcher.BadLite");
                 bot = (BadLiteInterface) c.getConstructor().newInstance();
             } else {
                 preParser.remove("--headless");
