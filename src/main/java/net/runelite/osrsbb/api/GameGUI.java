@@ -21,17 +21,17 @@ public class GameGUI  extends MethodProvider {
     public synchronized Widget getCompass() {
         ViewportLayout layout = getViewportLayout();
         if (layout != null) {
-            return switch (layout) {
-                case FIXED_CLASSIC -> methods.client.getWidget(
+            switch (layout) {
+                case FIXED_CLASSIC: return methods.client.getWidget(
                         WidgetIndices.FixedClassicViewport.GROUP_INDEX,
                         WidgetIndices.FixedClassicViewport.MINIMAP_COMPASS_SPRITE);
-                case RESIZABLE_CLASSIC -> methods.client.getWidget(
+                case RESIZABLE_CLASSIC: return methods.client.getWidget(
                         WidgetIndices.ResizableClassicViewport.GROUP_INDEX,
                         WidgetIndices.ResizableClassicViewport.MINIMAP_COMPASS_SPRITE);
-                case RESIZABLE_MODERN -> methods.client.getWidget(
+                case RESIZABLE_MODERN: return methods.client.getWidget(
                         WidgetIndices.ResizableModernViewport.GROUP_INDEX,
                         WidgetIndices.ResizableModernViewport.MINIMAP_COMPASS_SPRITE);
-            };
+            }
         }
         return null;
     }
@@ -42,14 +42,14 @@ public class GameGUI  extends MethodProvider {
     public synchronized Widget getMinimap() {
         ViewportLayout layout = getViewportLayout();
         if (layout != null) {
-            return switch (layout) {
-                case FIXED_CLASSIC -> methods.client.getWidget(
+            switch (layout) {
+                case FIXED_CLASSIC: return methods.client.getWidget(
                         WidgetIndices.FixedClassicViewport.GROUP_INDEX,
                         WidgetIndices.FixedClassicViewport.MINIMAP_CONTAINER);
-                case RESIZABLE_CLASSIC -> methods.client.getWidget(
+                case RESIZABLE_CLASSIC: return methods.client.getWidget(
                         WidgetIndices.ResizableClassicViewport.GROUP_INDEX,
                         WidgetIndices.ResizableClassicViewport.MINIMAP_CONTAINER);
-                case RESIZABLE_MODERN -> methods.client.getWidget(
+                case RESIZABLE_MODERN: return methods.client.getWidget(
                         WidgetIndices.ResizableModernViewport.GROUP_INDEX,
                         WidgetIndices.ResizableModernViewport.MINIMAP_CONTAINER);
             };
@@ -64,10 +64,10 @@ public class GameGUI  extends MethodProvider {
     public synchronized Widget getTab(final InterfaceTab interfaceTab) {
         ViewportLayout layout = getViewportLayout();
         if (layout != null) {
-            return switch (layout) {
-                case FIXED_CLASSIC -> interfaceTab.getFixedClassicWidget();
-                case RESIZABLE_CLASSIC -> interfaceTab.getResizableClassicWidget();
-                case RESIZABLE_MODERN -> interfaceTab.getResizableModernWidget();
+            switch (layout) {
+                case FIXED_CLASSIC: return interfaceTab.getFixedClassicWidget();
+                case RESIZABLE_CLASSIC: return interfaceTab.getResizableClassicWidget();
+                case RESIZABLE_MODERN: return interfaceTab.getResizableModernWidget();
             };
         }
         return null;

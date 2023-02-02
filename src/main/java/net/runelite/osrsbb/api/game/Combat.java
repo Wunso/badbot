@@ -367,14 +367,29 @@ public class Combat extends MethodProvider {
         if (mobName == null || mobName.equals(""))
             return false;
         switch (mobName) {
-            case "Ancient Zygomite" -> isBelowOrAtHP(npc, getFinishableHP(150, 7));
-            case "Gargoyle" -> isBelowOrAtHP(npc, getFinishableHP(105, 8));
-            case "Zygomite" -> isBelowOrAtHP(npc, getFinishableHP(75, 7));
-            case "Lizard" -> isBelowOrAtHP(npc, getFinishableHP(40, 4));
-            case "Rockslug" -> isBelowOrAtHP(npc, getFinishableHP(27, 5));
-            case "Desert Lizard" -> isBelowOrAtHP(npc, getFinishableHP(25, 4));
-            case "Small Lizard" -> isBelowOrAtHP(npc, getFinishableHP(15, 4));
-            default -> throw new IllegalStateException("Unexpected value: " + mobName);
+            case "Ancient Zygomite":
+                isBelowOrAtHP(npc, getFinishableHP(150, 7));
+                break;
+            case "Gargoyle":
+                isBelowOrAtHP(npc, getFinishableHP(105, 8));
+                break;
+            case "Zygomite":
+                isBelowOrAtHP(npc, getFinishableHP(75, 7));
+                break;
+            case "Lizard":
+                isBelowOrAtHP(npc, getFinishableHP(40, 4));
+                break;
+            case "Rockslug":
+                isBelowOrAtHP(npc, getFinishableHP(27, 5));
+                break;
+            case "Desert Lizard":
+                isBelowOrAtHP(npc, getFinishableHP(25, 4));
+                break;
+            case "Small Lizard":
+                isBelowOrAtHP(npc, getFinishableHP(15, 4));
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + mobName);
         }
         return false;
     }

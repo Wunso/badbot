@@ -71,7 +71,8 @@ public class TileFlags {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof TileFlags tileFlags) {
+        if (obj instanceof TileFlags) {
+            TileFlags tileFlags = (TileFlags) obj;
             return getTile().equals(tileFlags.getTile()) && flagsEqual(tileFlags, this);
         }
         return false;

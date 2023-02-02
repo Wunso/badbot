@@ -52,10 +52,11 @@ public class FileScriptSource implements ScriptSource {
 
 
     public Script load(ScriptDefinition def) throws ServiceException {
-        if (!(def instanceof FileScriptDefinition fsd)) {
+        if (!(def instanceof FileScriptDefinition)) {
             throw new IllegalArgumentException("Invalid definition!");
         }
         try {
+            FileScriptDefinition fsd = (FileScriptDefinition) def;
             return fsd.clazz.asSubclass(Script.class).newInstance();
         } catch (Exception ex) {
             throw new ServiceException(ex.toString());

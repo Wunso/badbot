@@ -686,7 +686,8 @@ public class RSWidget extends MethodProvider implements Clickable07 {
         if (obj == this) {
             return true;
         }
-        if (obj instanceof final RSWidget child) {
+        if (obj instanceof RSWidget) {
+            final RSWidget child = (RSWidget) obj;
             return (id == child.getId()) && child.parentWidget.equals(parentWidget);
         }
         return false;

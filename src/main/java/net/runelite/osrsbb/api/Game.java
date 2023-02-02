@@ -136,24 +136,40 @@ public class Game extends MethodProvider {
      */
     public InterfaceTab getCurrentTab() {
         int varcIntValue = methods.client.getVarcIntValue(VarcIntIndices.CURRENT_INTERFACE_TAB);
-        return switch (VarcIntValues.valueOf(varcIntValue)) {
-            case TAB_COMBAT_OPTIONS -> InterfaceTab.COMBAT;
-            case TAB_SKILLS -> InterfaceTab.SKILLS;
-            case TAB_QUEST_LIST -> InterfaceTab.QUESTS;
-            case TAB_INVENTORY -> InterfaceTab.INVENTORY;
-            case TAB_WORN_EQUIPMENT -> InterfaceTab.EQUIPMENT;
-            case TAB_PRAYER -> InterfaceTab.PRAYER;
-            case TAB_SPELLBOOK -> InterfaceTab.MAGIC;
-            case TAB_FRIEND_LIST -> InterfaceTab.FRIENDS;
-            case TAB_LOGOUT -> InterfaceTab.LOGOUT;
-            case TAB_SETTINGS -> InterfaceTab.SETTINGS;
-            case TAB_MUSIC -> InterfaceTab.MUSIC;
-            case TAB_CHAT_CHANNEL -> InterfaceTab.CHAT;
-            case TAB_ACC_MANAGEMENT -> InterfaceTab.ACC_MAN;
-            case TAB_EMOTES -> InterfaceTab.EMOTES;
-            case TAB_NOT_SELECTED -> InterfaceTab.NOTHING_SELECTED;
-            default -> throw new IllegalStateException("Unexpected value: " + VarcIntValues.valueOf(varcIntValue));
-        };
+        switch (VarcIntValues.valueOf(varcIntValue)) {
+            case TAB_COMBAT_OPTIONS:
+                return InterfaceTab.COMBAT;
+            case TAB_SKILLS:
+                return InterfaceTab.SKILLS;
+            case TAB_QUEST_LIST:
+                return InterfaceTab.QUESTS;
+            case TAB_INVENTORY:
+                return InterfaceTab.INVENTORY;
+            case TAB_WORN_EQUIPMENT:
+                return InterfaceTab.EQUIPMENT;
+            case TAB_PRAYER:
+                return InterfaceTab.PRAYER;
+            case TAB_SPELLBOOK:
+                return InterfaceTab.MAGIC;
+            case TAB_FRIEND_LIST:
+                return InterfaceTab.FRIENDS;
+            case TAB_LOGOUT:
+                return InterfaceTab.LOGOUT;
+            case TAB_SETTINGS:
+                return InterfaceTab.SETTINGS;
+            case TAB_MUSIC:
+                return InterfaceTab.MUSIC;
+            case TAB_CHAT_CHANNEL:
+                return InterfaceTab.CHAT;
+            case TAB_ACC_MANAGEMENT:
+                return InterfaceTab.ACC_MAN;
+            case TAB_EMOTES:
+                return InterfaceTab.EMOTES;
+            case TAB_NOT_SELECTED:
+                return InterfaceTab.NOTHING_SELECTED;
+            default:
+                throw new IllegalStateException("Unexpected value: " + VarcIntValues.valueOf(varcIntValue));
+        }
     }
 
     /**

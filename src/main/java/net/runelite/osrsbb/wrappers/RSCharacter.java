@@ -246,7 +246,8 @@ public abstract class RSCharacter extends MethodProvider implements Clickable07,
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof RSCharacter character) {
+        if (obj instanceof RSCharacter) {
+            RSCharacter character = (RSCharacter) obj;
             return character.getAccessor() == getAccessor();
         }
         return false;
@@ -324,17 +325,18 @@ public abstract class RSCharacter extends MethodProvider implements Clickable07,
                 // round up
                 ++round;
             }
-            return switch (round & 7) {
-                case 0 -> DIRECTION.S;
-                case 1 -> DIRECTION.SW;
-                case 2 -> DIRECTION.W;
-                case 3 -> DIRECTION.NW;
-                case 4 -> DIRECTION.N;
-                case 5 -> DIRECTION.NE;
-                case 6 -> DIRECTION.E;
-                case 7 -> DIRECTION.SE;
-                default -> throw new IllegalStateException();
-            };
+            switch (round & 7) {
+                case 0: return DIRECTION.S;
+                case 1: return DIRECTION.SW;
+                case 2: return DIRECTION.W;
+                case 3: return DIRECTION.NW;
+                case 4: return DIRECTION.N;
+                case 5: return DIRECTION.NE;
+                case 6: return DIRECTION.E;
+                case 7: return DIRECTION.SE;
+                default:
+                    throw new IllegalStateException();
+            }
         }
     }
 

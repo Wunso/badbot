@@ -36,9 +36,9 @@ public class Inventory extends MethodProvider {
         final String INVENTORY = "inventory", BANK = "bank", STORE = "store", GRAND_EXCHANGE = "grandexchange", TRADE = "trade";
         HashMap<String, RSWidget> widgets = new HashMap<>();
         switch (methods.gui.getViewportLayout()) {
-            case FIXED_CLASSIC -> widgets.put(INVENTORY, methods.interfaces.getComponent(WidgetInfo.FIXED_VIEWPORT_INVENTORY_CONTAINER));
-            case RESIZABLE_MODERN -> widgets.put(INVENTORY, methods.interfaces.getComponent(WidgetInfo.RESIZABLE_VIEWPORT_BOTTOM_LINE_INVENTORY_CONTAINER));
-            case RESIZABLE_CLASSIC -> widgets.put(INVENTORY, methods.interfaces.getComponent(WidgetInfo.RESIZABLE_VIEWPORT_INVENTORY_CONTAINER));
+            case FIXED_CLASSIC: widgets.put(INVENTORY, methods.interfaces.getComponent(WidgetInfo.FIXED_VIEWPORT_INVENTORY_CONTAINER));
+            case RESIZABLE_MODERN: widgets.put(INVENTORY, methods.interfaces.getComponent(WidgetInfo.RESIZABLE_VIEWPORT_BOTTOM_LINE_INVENTORY_CONTAINER));
+            case RESIZABLE_CLASSIC: widgets.put(INVENTORY, methods.interfaces.getComponent(WidgetInfo.RESIZABLE_VIEWPORT_INVENTORY_CONTAINER));
         }
         widgets.put(BANK, methods.interfaces.getComponent(WidgetInfo.BANK_INVENTORY_ITEMS_CONTAINER)); //Bug #137 - Bank has its own inventory container
         widgets.put(STORE, methods.interfaces.getComponent(WidgetInfo.SHOP_INVENTORY_ITEMS_CONTAINER));

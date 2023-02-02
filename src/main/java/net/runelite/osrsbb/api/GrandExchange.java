@@ -612,17 +612,17 @@ public class GrandExchange extends MethodProvider {
     }
 
     public int mapSlotToSlotIndex(int slot) {
-        return switch (slot) {
-            case 0 -> WidgetIndices.GrandExchange.FIRST_SLOT_DYNAMIC_CONTAINER;
-            case 1 -> WidgetIndices.GrandExchange.SECOND_SLOT_DYNAMIC_CONTAINER;
-            case 2 -> WidgetIndices.GrandExchange.THIRD_SLOT_DYNAMIC_CONTAINER;
-            case 3 -> WidgetIndices.GrandExchange.FOURTH_SLOT_DYNAMIC_CONTAINER;
-            case 4 -> WidgetIndices.GrandExchange.FIFTH_SLOT_DYNAMIC_CONTAINER;
-            case 5 -> WidgetIndices.GrandExchange.SIXTH_SLOT_DYNAMIC_CONTAINER;
-            case 6 -> WidgetIndices.GrandExchange.SEVENTH_SLOT_DYNAMIC_CONTAINER;
-            case 7 -> WidgetIndices.GrandExchange.EIGHT_SLOT_DYNAMIC_CONTAINER;
-            default -> -1;
-        };
+        switch (slot) {
+            case 0: return WidgetIndices.GrandExchange.FIRST_SLOT_DYNAMIC_CONTAINER;
+            case 1: return WidgetIndices.GrandExchange.SECOND_SLOT_DYNAMIC_CONTAINER;
+            case 2: return WidgetIndices.GrandExchange.THIRD_SLOT_DYNAMIC_CONTAINER;
+            case 3: return WidgetIndices.GrandExchange.FOURTH_SLOT_DYNAMIC_CONTAINER;
+            case 4: return WidgetIndices.GrandExchange.FIFTH_SLOT_DYNAMIC_CONTAINER;
+            case 5: return WidgetIndices.GrandExchange.SIXTH_SLOT_DYNAMIC_CONTAINER;
+            case 6: return WidgetIndices.GrandExchange.SEVENTH_SLOT_DYNAMIC_CONTAINER;
+            case 7: return WidgetIndices.GrandExchange.EIGHT_SLOT_DYNAMIC_CONTAINER;
+            default: return -1;
+        }
     }
 
     /**

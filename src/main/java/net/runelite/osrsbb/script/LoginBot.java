@@ -58,15 +58,15 @@ public class LoginBot extends Random {
                         return 10000;
                     case 2:
                         switch (ctx.client.getCurrentLoginField()) {
-                            case 0 -> {
+                            case 0: {
                                 ctx.keyboard.sendText(account.getName().toLowerCase().trim(), true);
                                 return random(1000, 5000);
                             }
-                            case 1 -> {
+                            case 1: {
                                 ctx.keyboard.sendText(AccountManager.getPassword(account.getName()), true);
                                 return random(5000, 10000);
                             }
-                            default -> {
+                            default: {
                                 throw new Exception("Unknown login state");
                             }
                         }
