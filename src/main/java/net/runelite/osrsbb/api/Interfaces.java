@@ -11,8 +11,6 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static net.runelite.osrsbb.util.Time.sleep;
-
 /**
  * Provides access to interfaces.
  */

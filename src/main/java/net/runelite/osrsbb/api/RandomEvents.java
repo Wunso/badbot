@@ -8,8 +8,6 @@ import net.runelite.osrsbb.wrappers.RSWidget;
 
 import java.util.function.BooleanSupplier;
 
-import static net.runelite.osrsbb.util.Time.sleepUntil;
-
 public class RandomEvents extends MethodProvider {
     RandomEvents(MethodContext ctx) {
         super(ctx);

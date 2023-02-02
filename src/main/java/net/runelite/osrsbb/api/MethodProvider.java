@@ -1,11 +1,15 @@
 package net.runelite.osrsbb.api;
 
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.GameState;
+import net.runelite.osrsbb.util.Rand;
 
+import java.time.Duration;
 import java.util.function.BooleanSupplier;
 @Slf4j
 public abstract class MethodProvider {
     public static MethodContext methods = null;
+    private static final int DEFAULT_POLLING_RATE = 10;
     public MethodProvider(MethodContext ctx) {
         this.methods = ctx;
     }
@@ -73,42 +77,6 @@ public abstract class MethodProvider {
     }
 
     /**
-     * @param toSleep The time to sleep in milliseconds.
-     * TODO: busy-wait anti-pattern, not nice :{
-     */
-    /*
-    public void sleep(int toSleep) {
-        try {
-            long start = System.currentTimeMillis();
-            Thread.sleep(toSleep);
-            long now; // Guarantee minimum sleep
-            while (start + toSleep > (now = System.currentTimeMillis())) {
-                Thread.sleep(start + toSleep - now);
-            }
-        } catch (InterruptedException ignored) {
-            log.debug("Method sleep disrupted", ignored);
-        }
-    }
-    */
-
-    /**
-     * Pauses execution for a given number of milliseconds.
-     *
-     * @param awaitedCondition Condition which breaks awaiting.
-     * @param awaitTimeout The time to sleep in milliseconds.
-     */
-    /*
-    public void sleepUntil(BooleanSupplier awaitedCondition, int awaitTimeout) {
-        boolean done;
-        long startTime = System.currentTimeMillis();
-        do {
-            done = awaitedCondition.getAsBoolean();
-        } while (!done && System.currentTimeMillis() - startTime < awaitTimeout);
-    }
-
-     */
-
-    /**
      * Gets the digit at the index of the number
      * @param number the number to get the digit from
      * @param index the position to check
@@ -117,5 +85,149 @@ public abstract class MethodProvider {
      */
     int nth ( int number, int index ) {
         return (int)(number / Math.pow(10, index)) % 10;
+    }
+
+    public static boolean sleep(long ms)
+    {
+        if (methods.client.isClientThread())
+        {
+            return false;
+        }
+
+        try
+        {
+            Thread.sleep(ms);
+            return true;
+        }
+        catch (InterruptedException e)
+        {
+            log.debug("Sleep interrupted");
+        }
+
+        return false;
+    }
+
+    public static boolean sleep(int min, int max)
+    {
+        return sleep(Rand.nextInt(min, max));
+    }
+
+    public static boolean sleepUntil(BooleanSupplier supplier, BooleanSupplier resetSupplier, int pollingRate, int timeOut)
+    {
+        if (methods.client.isClientThread())
+        {
+            log.debug("Tried to sleepUntil on client thread!");
+            return false;
+        }
+
+        long start = System.currentTimeMillis();
+        while (!supplier.getAsBoolean())
+        {
+            if (System.currentTimeMillis() > start + timeOut)
+            {
+                return false;
+            }
+
+            if (resetSupplier.getAsBoolean())
+            {
+                start = System.currentTimeMillis();
+            }
+
+            if (!sleep(pollingRate))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static boolean sleepUntil(BooleanSupplier supplier, BooleanSupplier resetSupplier, int timeOut)
+    {
+        return sleepUntil(supplier, resetSupplier, DEFAULT_POLLING_RATE, timeOut);
+    }
+
+    public static boolean sleepUntil(BooleanSupplier supplier, int pollingRate, int timeOut)
+    {
+        return sleepUntil(supplier, () -> false, pollingRate, timeOut);
+    }
+
+    public static boolean sleepUntil(BooleanSupplier supplier, int timeOut)
+    {
+        return sleepUntil(supplier, DEFAULT_POLLING_RATE, timeOut);
+    }
+
+    public static boolean sleepTicks(int ticks)
+    {
+        if (methods.client.isClientThread())
+        {
+            log.debug("Tried to sleep on client thread!");
+            return false;
+        }
+
+        if (Game.getClientState() == GameState.LOGIN_SCREEN || Game.getClientState() == GameState.LOGIN_SCREEN_AUTHENTICATOR)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < ticks; i++)
+        {
+            long start = methods.client.getTickCount();
+
+            while (methods.client.getTickCount() == start)
+            {
+                try
+                {
+                    Thread.sleep(DEFAULT_POLLING_RATE);
+                }
+                catch (InterruptedException e)
+                {
+                    log.debug("Sleep interrupted");
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public static boolean sleepTick()
+    {
+        return sleepTicks(1);
+    }
+
+    public static boolean sleepTicksUntil(BooleanSupplier supplier, int ticks)
+    {
+        if (methods.client.isClientThread())
+        {
+            log.debug("Tried to sleep on client thread!");
+            return false;
+        }
+
+        if (Game.getClientState() == GameState.LOGIN_SCREEN || Game.getClientState() == GameState.LOGIN_SCREEN_AUTHENTICATOR)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < ticks; i++)
+        {
+            if (supplier.getAsBoolean())
+            {
+                return true;
+            }
+
+            if (!sleepTick())
+            {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    public static String format(Duration duration)
+    {
+        long secs = Math.abs(duration.getSeconds());
+        return String.format("%02d:%02d:%02d", secs / 3600L, secs % 3600L / 60L, secs % 60L);
     }
 }

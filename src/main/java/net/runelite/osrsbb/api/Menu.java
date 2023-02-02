@@ -8,8 +8,6 @@ import net.runelite.osrsbb.wrappers.RSItem;
 import java.awt.*;
 import java.util.regex.Pattern;
 
-import static net.runelite.osrsbb.util.Time.sleep;
-
 public class Menu extends MethodProvider {
     private static final Pattern HTML_TAG = Pattern
             .compile("(^[^<]+>|<[^>]+>|<[^>]+$)");

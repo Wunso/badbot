@@ -16,7 +16,6 @@ import net.runelite.osrsbb.wrappers.RSWidget;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static net.runelite.osrsbb.util.Time.sleep;
 
 /**
  * Game state and GUI operations.
