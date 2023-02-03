@@ -468,7 +468,7 @@ public class Bank extends MethodProvider {
         if (isOpen()) { return true; }
         try {
             if (methods.menu.isOpen()) {
-                methods.mouse.moveSlightly();
+                //methods.mouse.moveSlightly();
                 sleep(random(20, 30));
             }
             RSObject bankBooth = methods.objects.getNearest(BANK_BOOTHS);
@@ -534,7 +534,7 @@ public class Bank extends MethodProvider {
         try {
             if (!isDepositOpen()) {
                 if (methods.menu.isOpen()) {
-                    methods.mouse.moveSlightly();
+                    //methods.mouse.moveSlightly();
                     sleep(random(20, 30));
                 }
                 RSObject depositBox = methods.objects.getNearest(BANK_DEPOSIT_BOX);

@@ -138,14 +138,14 @@ public class RSObject extends MethodProvider implements Clickable07, Positionabl
         } else {
             Point p = methods.calc.tileToScreen(getLocation());
             if (methods.calc.pointOnScreen(p)) {
-                methods.mouse.move(p);
+                //methods.mouse.move(p);
                 if (methods.calc.pointOnScreen(p)) {
                     methods.mouse.click(leftClick);
                     return true;
                 } else {
                     p = methods.calc.tileToScreen(getLocation());
                     if (methods.calc.pointOnScreen(p)) {
-                        methods.mouse.move(p);
+                        //methods.mouse.move(p);
                         methods.mouse.click(leftClick);
                         return true;
                     }
@@ -162,12 +162,12 @@ public class RSObject extends MethodProvider implements Clickable07, Positionabl
     public boolean doHover() {
         RSModel model = getModel();
         if (model != null) {
-            model.hover();
+            //model.hover();
             return true;
         } else {
             Point p = methods.calc.tileToScreen(getLocation());
             if (methods.calc.pointOnScreen(p)) {
-                methods.mouse.move(p);
+                //methods.mouse.move(p);
                 return true;
             }
         }

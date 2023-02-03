@@ -73,7 +73,7 @@ public class RSPlayer extends RSCharacter {
                 if (methods.mouse.getLocation().equals(screenLoc)) {
                     break;
                 }
-                methods.mouse.move(screenLoc);
+                //methods.mouse.move(screenLoc);
             }
             MenuEntry[] entries = methods.menu.getEntries();
             if (entries.length <= 1) {

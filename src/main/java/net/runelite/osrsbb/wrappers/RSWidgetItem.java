@@ -53,8 +53,8 @@ public class RSWidgetItem extends MethodProvider {
             int min_x = rect.x + 1, min_y = rect.y + 1;
             int max_x = min_x + rect.width - 2, max_y = min_y + rect.height - 2;
 
-            methods.mouse.move(random(min_x, max_x, rect.width / 3),
-                    random(min_y, max_y, rect.height / 3));
+            //methods.mouse.move(random(min_x, max_x, rect.width / 3),
+                    //random(min_y, max_y, rect.height / 3));
             sleep(random(40, 80));
         }
         return methods.menu.doAction(action, option);
@@ -120,8 +120,8 @@ public class RSWidgetItem extends MethodProvider {
         int min_x = rect.x + 1, min_y = rect.y + 1;
         int max_x = min_x + rect.width - 2, max_y = min_y + rect.height - 2;
 
-        methods.mouse.move(random(min_x, max_x, rect.width / 3),
-                random(min_y, max_y, rect.height / 3));
+        //methods.mouse.move(random(min_x, max_x, rect.width / 3),
+                //random(min_y, max_y, rect.height / 3));
         return true;
     }
 

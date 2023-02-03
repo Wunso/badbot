@@ -300,7 +300,7 @@ public abstract class Script extends Methods implements EventListener, Runnable 
         } else {
             log.error("Failed to start up.");
         }
-        mouse.moveOffScreen();
+        //mouse.moveOffScreen();
         for (Script s : delegates) {
             ctx.badLite.getEventManager().removeListener(s);
         }

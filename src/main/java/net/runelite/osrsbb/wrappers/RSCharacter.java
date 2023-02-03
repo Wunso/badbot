@@ -286,7 +286,7 @@ public abstract class RSCharacter extends MethodProvider implements Clickable07,
         if (model == null) {
             return false;
         }
-        this.getModel().hover();
+        //this.getModel().hover();
         return true;
     }
 

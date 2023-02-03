@@ -97,7 +97,7 @@ public class RSGroundItem extends MethodProvider implements Clickable07, Positio
         if (model == null) {
             return false;
         }
-        this.getModel().hover();
+        //this.getModel().hover();
         return true;
     }
 

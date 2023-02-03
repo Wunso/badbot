@@ -87,7 +87,7 @@ public class WalkerTile extends RSTile implements Clickable07, Positionable {
     public boolean doHover() {
         Point p = ctx.calc.tileToScreen(this.toWorldTile());
         if (isClickable()) {
-            ctx.mouse.move(p);
+            //ctx.mouse.move(p);
             return true;
         }
         return false;

@@ -63,7 +63,7 @@ public class Menu extends MethodProvider {
             return clickIndex(idx);
         } else if (idx == -1) {
             while (isOpen()) {
-                methods.mouse.moveRandomly(750);
+                //methods.mouse.moveRandomly(750);
                 sleep(random(100, 500));
             }
             return false;
@@ -122,7 +122,7 @@ public class Menu extends MethodProvider {
         FontMetrics fm = methods.badLite.getLoader().getGraphics().getFontMetrics(FontManager.getRunescapeBoldFont());
         int xOff = random(1, (fm.stringWidth(item) + MENU_SIDE_BORDER) - 1);
         int yOff = TOP_OF_MENU_BAR + (((MENU_ENTRY_LENGTH * i) + random(2, MENU_ENTRY_LENGTH - 2)));
-        methods.mouse.move(menu.x + xOff, menu.y + yOff);
+        //methods.mouse.move(menu.x + xOff, menu.y + yOff);
         sleep(random(100, 200));
         if (isOpen()) {
             methods.mouse.click(true);

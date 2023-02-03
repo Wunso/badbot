@@ -120,9 +120,9 @@ public class RSModel extends MethodProvider {
     public boolean doClick(boolean leftClick) {
         try {
             for (int i = 0; i < 10; i++) {
-                methods.mouse.move(getPoint());
+                //methods.mouse.move(getPoint());
                 if (this.contains(methods.mouse.getLocation())) {
-                    methods.mouse.click(leftClick);
+                    methods.mouse.click(getPoint(), true);
                     return true;
                 }
             }
@@ -142,7 +142,7 @@ public class RSModel extends MethodProvider {
     public boolean doAction(String action, String... target) {
         try {
             for (int i = 0; i < 10; i++) {
-                methods.mouse.move(getPoint());
+                //methods.mouse.move(getPoint());
                 if (this.contains(methods.mouse.getLocation())) {
                     if (methods.menu.doAction(action, target)) {
                         return true;
@@ -336,9 +336,9 @@ public class RSModel extends MethodProvider {
     /**
      * Moves the mouse onto the RSModel.
      */
-    public void hover() {
-        methods.mouse.move(getPoint());
-    }
+    //public void hover() {
+        //methods.mouse.move(getPoint());
+    //}
 
     /**
      * Returns true if the provided object is an RSModel with the same x, y and

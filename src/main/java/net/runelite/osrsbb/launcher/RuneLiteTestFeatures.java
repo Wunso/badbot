@@ -40,7 +40,7 @@ public class RuneLiteTestFeatures {
         if (welcomeScreenMotW != null) {
             if (welcomeScreenMotW.getTextColor() != -1) {
                 Rectangle clickHereToPlayButton = new Rectangle(270, 295, 225, 80);
-                bot.getMethodContext().mouse.move(new Point(clickHereToPlayButton.x, clickHereToPlayButton.y), clickHereToPlayButton.width, clickHereToPlayButton.height);
+                //bot.getMethodContext().mouse.move(new Point(clickHereToPlayButton.x, clickHereToPlayButton.y), clickHereToPlayButton.width, clickHereToPlayButton.height);
                 bot.getMethodContext().mouse.click(true);
                 sleep(8000);
             }

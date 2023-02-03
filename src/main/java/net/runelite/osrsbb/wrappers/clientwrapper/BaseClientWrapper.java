@@ -29,6 +29,7 @@ Base class for wrapping runelite Client, along with some weird Applet shenanigan
 public abstract class BaseClientWrapper extends Applet implements Client {
     public final Client wrappedClient;
 
+
     public BaseClientWrapper(Client client) {
         this.wrappedClient = client;
     }
@@ -1522,20 +1523,21 @@ public abstract class BaseClientWrapper extends Applet implements Client {
     }
 
     public void interact(int identifier, int opcode, int clickX, int clickY) {
-        interact(identifier, opcode, clickX, clickY);
-    }
-
-    public void interact(int identifier, int opcode, int param0, int param1, int clickX, int clickY) {
-        interact(identifier, opcode, param0, param1, clickX, clickY, null);
-    }
-
-    public void interact(int identifier, int opcode, int param0, int param1, int clickX, int clickY, SceneEntity sceneEntity) {
         interact(
                 MenuAutomated.builder()
                         .identifier(identifier)
                         .opcode(MenuAction.of(opcode))
-                        .param0(param0)
-                        .param1(param1)
+                        .clickX(clickX)
+                        .clickY(clickY)
+                        .build()
+        );
+    }
+
+    public void interact(int identifier, int opcode, int clickX, int clickY, SceneEntity sceneEntity) {
+        interact(
+                MenuAutomated.builder()
+                        .identifier(identifier)
+                        .opcode(MenuAction.of(opcode))
                         .clickX(clickX)
                         .clickY(clickY)
                         .entity(sceneEntity)

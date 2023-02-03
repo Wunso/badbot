@@ -130,8 +130,8 @@ public class Interfaces extends MethodProvider {
                 && methods.menu.doAction(action)) {
             return true;
         }
-        methods.mouse.move(random(minX, minX + width),
-                random(minY, minY + height));
+        //methods.mouse.move(random(minX, minX + width),
+                //random(minY, minY + height));
         return methods.menu.doAction(action);
     }
 

@@ -20,8 +20,8 @@ public class MenuAutomated {
     private String target = "";
     private int identifier;
     private MenuAction opcode;
-    private int param0;
-    private int param1;
+    //private int param0;
+    //private int param1;
     @Builder.Default
     private int clickX = -1;
     @Builder.Default
@@ -52,8 +52,8 @@ public class MenuAutomated {
                 .setTarget(target)
                 .setIdentifier(identifier)
                 .setType(opcode)
-                .setParam0(param0)
-                .setParam1(param1)
+                //.setParam0(param0)
+                //.setParam1(param1)
                 .onClick(consumer);
     }
 
